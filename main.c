@@ -5,9 +5,9 @@
 #include "access_program_memory.h"
 
 /******************************************************************************
- * 
- *
- *
+ * samlpe code of accessing program memory
+ *  -write data to program memory.
+ *  -read same address and check the data.
  *****************************************************************************/
 
 void SYSTEM_Initialize (void);
@@ -15,25 +15,26 @@ void SYSTEM_Initialize (void);
 
 int main(void)
 {
-    /*init configulation bit*/
-    config_init();
-    /*INIT SYSTEM*/
-    SYSTEM_Initialize();
-    /*init UART*/
-    uart_init_2400();
-
-    delay_ms(2000);
-    
-    printf("test_hello\r\n");
+    config_init();          //initialize config
+    SYSTEM_Initialize();    //initialize system
+    uart_init_2400();       //initialize uart
 
 
-
+    /*Initialize program memory. */
     Flash_Init();
-    
-    while(1){
-    }
-}
 
+    /*Write the test data */
+    unsigned int data = 0xABCD;
+    unsigned int address = 0;
+    Write_Memory(address, data);
+
+    /*Read the data from memory*/
+    data =Read_Memory(address);
+    
+    printf("data:%x\r\n",data);        //pit put 0xABCD
+
+    while(1);
+}
 
 void SYSTEM_Initialize (void)
 {

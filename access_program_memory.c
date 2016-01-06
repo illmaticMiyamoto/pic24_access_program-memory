@@ -123,3 +123,24 @@ int Flash_Bulk_Write_With_Erase(unsigned int page, unsigned int offset, unsigned
     return 0;
 }
 
+
+/******************************************************************************
+ * unsigned int Read_Memory(unsigned int address);
+ ******************************************************************************/
+unsigned int Read_Memory(unsigned int address){
+    unsigned int data;
+    unsigned int page   = __builtin_tblpage(_flash_datas);
+
+    data = Flash_Read(page, FLASH_BLOCK_ADDRESS + 2*address);
+
+    return data;
+}
+/******************************************************************************
+ * unsigned int Write_Memory(unsigned int address, unsigned int data);
+ ******************************************************************************/
+unsigned int Write_Memory(unsigned int address, unsigned int data){
+    unsigned int page   = __builtin_tblpage(_flash_datas);
+    int state = Flash_Bulk_Write_With_Erase(page, FLASH_BLOCK_ADDRESS + 2*address, data);
+    return state;
+}
+

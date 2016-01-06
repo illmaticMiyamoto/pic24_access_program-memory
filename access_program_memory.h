@@ -17,6 +17,7 @@ extern "C" {
 #define BLOCK_FLASH_SIZE    0x600   //one block reg size
 #define TOTAL_FLASH_SIZE    0xC00   //total reg size (2block)
 #define FLASH_BLOCK_ADDRESS 0x9000  //first address of the flash block
+#define MEMORY_SIZE         0x600   //[word]
 
 
 /******************************************************************************
@@ -58,8 +59,21 @@ void Flash_Init(void);
  *  -Write the new data to the buffer.
  *  -Erase 0x400 size block registor.
  *  -Write all data to the program memory.
+ *
+ * error -> return -1
  ******************************************************************************/
 int Flash_Bulk_Write_With_Erase(unsigned int page, unsigned int offset, unsigned int val);
+
+
+/******************************************************************************
+ * unsigned int Read_Memory(unsigned int address);
+ * address: integer from 0 to 0x600-1
+ ******************************************************************************/
+unsigned int Read_Memory(unsigned int address);
+/******************************************************************************
+ * unsigned int Write_Memory(unsigned int address, unsigned int data);
+ ******************************************************************************/
+unsigned int Write_Memory(unsigned int address, unsigned int data);
 
 #ifdef	__cplusplus
 }
