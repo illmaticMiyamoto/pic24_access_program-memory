@@ -20,29 +20,8 @@ extern "C" {
 #define MEMORY_SIZE         0x600   //[word]
 
 
-/******************************************************************************
- * void Flash_Erase(unsigned int page, unsigned int offset);
- *
- * Erase memory 0x400 registor size.
- *  -Turn all data to 0xFF (Initial data = 0x00)
- * ex)   Erase 0x9000~0x9400 : Flash_Erase((page,0x9600);
- *  also Erase 0x9000~0x9400 : Flash_Erase((page,0x9700);
- ******************************************************************************/
-void Flash_Erase(unsigned int page, unsigned int offset);
 
-/******************************************************************************
- * unsigned int Flash_Read(unsigned int page, unsigned int offset);
- * Read data;
- ******************************************************************************/
-unsigned int Flash_Read(unsigned int page, unsigned int offset);
 
-/******************************************************************************
- * void Flash_Write(unsigned int page, unsigned int offset, unsigned int val);
- *
- * Write the data to regisor.
- * It is impossible to overwrite data.
- ******************************************************************************/
- void Flash_Write(unsigned int page, unsigned int offset, unsigned int val);
 
 /******************************************************************************
  * Flash_Init(void);
@@ -50,21 +29,6 @@ unsigned int Flash_Read(unsigned int page, unsigned int offset);
  * Initialize registor to erase data.
  ******************************************************************************/
 void Flash_Init(void);
-
-/******************************************************************************
- * Flash_Bulk_Write_With_Erase(unsigned int page, unsigned int offset, unsigned int val);
- *
- * Write the data to registor.
- *  -Read all data and stored to the BUFFER.
- *  -Write the new data to the buffer.
- *  -Erase 0x400 size block registor.
- *  -Write all data to the program memory.
- *
- * error -> return -1
- ******************************************************************************/
-int Flash_Bulk_Write_With_Erase(unsigned int page, unsigned int offset, unsigned int val);
-
-
 /******************************************************************************
  * unsigned int Read_Memory(unsigned int address);
  * address: integer from 0 to 0x600-1

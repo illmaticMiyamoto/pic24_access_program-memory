@@ -6,6 +6,16 @@ const __attribute__((section("my_memory"), space (prog), address (FLASH_BLOCK_AD
 const __attribute__((section("my_memory"), space (prog), address (FLASH_BLOCK_ADDRESS+BLOCK_FLASH_SIZE) )) unsigned int _flash_datas2[96*8]; //test write
 
 
+/*
+ * prototype
+ */
+static void Flash_Erase(unsigned int page, unsigned int offset);
+static unsigned int Flash_Read(unsigned int page, unsigned int offset);
+static void Flash_Write(unsigned int page, unsigned int offset, unsigned int val);
+static int Flash_Bulk_Write_With_Erase(unsigned int page, unsigned int offset, unsigned int val);
+
+
+
 /******************************************************************************
  * void Flash_Erase(unsigned int page, unsigned int offset);
  *
@@ -14,7 +24,7 @@ const __attribute__((section("my_memory"), space (prog), address (FLASH_BLOCK_AD
  * ex)   Erase 0x9000~0x9400 : Flash_Erase((page,0x9600);
  *  also Erase 0x9000~0x9400 : Flash_Erase((page,0x9700);
  ******************************************************************************/
-void Flash_Erase(unsigned int page, unsigned int offset)
+static void Flash_Erase(unsigned int page, unsigned int offset)
 {
     while(NVMCONbits.WR);
     TBLPAG = page;
@@ -29,7 +39,7 @@ void Flash_Erase(unsigned int page, unsigned int offset)
  * unsigned int Flash_Read(unsigned int page, unsigned int offset);
  * Read data;
  ******************************************************************************/
-unsigned int Flash_Read(unsigned int page, unsigned int offset)
+static unsigned int Flash_Read(unsigned int page, unsigned int offset)
 {
     unsigned int val;
     while(NVMCONbits.WR);
@@ -44,7 +54,7 @@ unsigned int Flash_Read(unsigned int page, unsigned int offset)
  * Write the data to regisor.
  * It is impossible to overwrite data.
  ******************************************************************************/
-void Flash_Write(unsigned int page, unsigned int offset, unsigned int val)
+static void Flash_Write(unsigned int page, unsigned int offset, unsigned int val)
 {
     while(NVMCONbits.WR);
 
